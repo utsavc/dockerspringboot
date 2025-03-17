@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3308/dockerspringboot
+    username: utsav
+    password: utsav
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    hikari:
+#      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+
+# JWT Configuration
+# Use a strong secret key in production
+# Token expiration time in milliseconds (24 hours)
+#jwt:
+#  secret: ${JWT_SECRET}
+#  expiration: ${JWT_EXPIRATION}
