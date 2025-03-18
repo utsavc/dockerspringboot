@@ -1,6 +1,7 @@
 package com.utsav.dockerspringboot.service.user;
 
 import com.utsav.dockerspringboot.enums.Role;
+import com.utsav.dockerspringboot.exceptions.DuplicateUsernameException;
 import com.utsav.dockerspringboot.model.User;
 import com.utsav.dockerspringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
        if(userRepository.existsByUsername(user.getUsername())){
-           throw new RuntimeException("Username already exists");
+           throw new DuplicateUsernameException("Username already exists");
         }
        if(user.getRole()==null){
            user.setRole(Role.USER);
