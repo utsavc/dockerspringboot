@@ -18,6 +18,11 @@ services:
       JWT_SECRET: mySecureKeyThatIsAtLeast32BytesLong1234567890
     networks:
       - springboot-network
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          target: /app
 
   db:
     image: mysql:8.0

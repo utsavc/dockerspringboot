@@ -35,10 +35,11 @@ public class SecurityConfig {
         http.csrf(customizer->customizer.disable());
         http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(request->request.requestMatchers("/public/**").permitAll()
+                .requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults());
         http.addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
 
     }

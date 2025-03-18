@@ -29,6 +29,6 @@ springdoc:
 # JWT Configuration
 # Use a strong secret key in production
 # Token expiration time in milliseconds (24 hours)
-#jwt:
-#  secret: ${JWT_SECRET}
-#  expiration: ${JWT_EXPIRATION}
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
