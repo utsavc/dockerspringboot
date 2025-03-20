@@ -1,7 +1,6 @@
 package com.utsav.dockerspringboot.service.order;
 
-import com.utsav.dockerspringboot.exceptions.OrderItemNotFoundException;
-import com.utsav.dockerspringboot.exceptions.OrderItemNotFoundException;
+import com.utsav.dockerspringboot.exception.OrderItemNotFoundException;
 import com.utsav.dockerspringboot.model.OrderItem;
 import com.utsav.dockerspringboot.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;

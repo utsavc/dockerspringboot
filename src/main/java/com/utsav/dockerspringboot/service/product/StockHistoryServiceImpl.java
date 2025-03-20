@@ -1,6 +1,6 @@
 package com.utsav.dockerspringboot.service.product;
 
-import com.utsav.dockerspringboot.exceptions.ProductNotFoundException;
+import com.utsav.dockerspringboot.exception.ProductNotFoundException;
 import com.utsav.dockerspringboot.model.Product;
 import com.utsav.dockerspringboot.model.StockHistory;
 import com.utsav.dockerspringboot.repository.ProductRepository;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StockHistoryServiceImpl implements StockHistoryService {

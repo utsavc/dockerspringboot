@@ -1,4 +1,4 @@
-package com.utsav.dockerspringboot.exceptions;
+package com.utsav.dockerspringboot.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

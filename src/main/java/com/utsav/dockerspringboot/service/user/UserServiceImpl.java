@@ -1,7 +1,7 @@
 package com.utsav.dockerspringboot.service.user;
 
 import com.utsav.dockerspringboot.enums.Role;
-import com.utsav.dockerspringboot.exceptions.DuplicateUsernameException;
+import com.utsav.dockerspringboot.exception.DuplicateUsernameException;
 import com.utsav.dockerspringboot.model.User;
 import com.utsav.dockerspringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

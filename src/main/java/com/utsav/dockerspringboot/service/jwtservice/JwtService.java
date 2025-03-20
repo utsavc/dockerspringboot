@@ -36,7 +36,7 @@ public class JwtService {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        long expirationTime = Long.parseLong(expiryTime);
+        long expirationTime = Long.parseLong(expiryTime)*1000;
         return Jwts.builder()
                 .setClaims(claims) // Include the claims (roles, etc.)
                 .setSubject(subject) // Set the subject (username)

@@ -1,14 +1,22 @@
 package com.utsav.dockerspringboot.service.cart;
 
-import com.utsav.dockerspringboot.exceptions.CartNotFoundException;
+import com.utsav.dockerspringboot.dto.CartDto;
 import com.utsav.dockerspringboot.model.Cart;
+import com.utsav.dockerspringboot.model.Product;
+import com.utsav.dockerspringboot.model.User;
 import com.utsav.dockerspringboot.repository.CartRepository;
+import com.utsav.dockerspringboot.repository.ProductRepository;
+import com.utsav.dockerspringboot.repository.UserRepository;
+import com.utsav.dockerspringboot.utils.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -17,27 +25,35 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private CartRepository cartRepository;
 
-    @Override
-    public Cart addToCart(Cart cart) {
-        cart.setAddedAt(LocalDateTime.now());
-        return cartRepository.save(cart);
-    }
+    @Autowired
+    private MyUtils myUtils;
+
+    @Autowired
+    private UserRepository userRepository;
+
+
+    @Autowired
+    private ProductRepository productRepository;
+
 
     @Override
-    public List<Cart> getCartByUserId(Long userId) {
-        return cartRepository.findByUserUserId(userId);
+    public Cart addToCart(CartDto cartDto) {
+        Product product= productRepository.findById(cartDto.getProductId())
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+            User user = userRepository.findByUsername(myUtils.getCurrentUsername())
+                    .orElseThrow(()-> new UsernameNotFoundException("Unauthorized User"));
+
+            Cart cart =new Cart();
+            cart.setProduct(product);
+            cart.setUser(user);
+            cart.setQuantity(cartDto.getQuantity());
+            cart.setAddedAt(cartDto.getAddedAt());
+            cartRepository.save(cart);
+            return cart;
     }
 
-    @Override
-    public void removeFromCart(Long cartId) {
-        cartRepository.deleteById(cartId);
-    }
 
-    @Override
-    public Cart updateCartQuantity(Long cartId, Integer quantity) {
-        Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new CartNotFoundException("Cart not found with id: " + cartId));
-        cart.setQuantity(quantity);
-        return cartRepository.save(cart);
-    }
+
+
 }

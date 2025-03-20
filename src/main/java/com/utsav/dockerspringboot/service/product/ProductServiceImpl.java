@@ -1,6 +1,6 @@
 package com.utsav.dockerspringboot.service.product;
 
-import com.utsav.dockerspringboot.exceptions.ProductNotFoundException;
+import com.utsav.dockerspringboot.exception.ProductNotFoundException;
 import com.utsav.dockerspringboot.model.Product;
 import com.utsav.dockerspringboot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

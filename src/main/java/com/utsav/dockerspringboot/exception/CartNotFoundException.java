@@ -1,4 +1,4 @@
-package com.utsav.dockerspringboot.exceptions;
+package com.utsav.dockerspringboot.exception;
 
 public class CartNotFoundException extends RuntimeException {
     public CartNotFoundException(String message) {

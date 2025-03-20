@@ -34,10 +34,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(customizer->customizer.disable());
         http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.authorizeHttpRequests(request->request.requestMatchers("/public/**").permitAll()
+//        http.authorizeHttpRequests(request->request.requestMatchers("/public/**").permitAll()
+//                .requestMatchers("/swagger-ui/**").permitAll()
+//                .requestMatchers("/user/**").hasRole("USER")
+//                .requestMatchers("/admin/**").hasRole("ADMIN")
+//                .anyRequest().authenticated());
+
+        http.authorizeHttpRequests(request -> request
+                .requestMatchers("/public/**","/swagger-ui/**", "/v3/api-docs/**", "/v2/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                 .requestMatchers("/user/**").hasRole("USER")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
+
         http.httpBasic(Customizer.withDefaults());
         http.addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

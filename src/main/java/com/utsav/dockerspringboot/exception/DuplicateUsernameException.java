@@ -1,4 +1,4 @@
-package com.utsav.dockerspringboot.exceptions;
+package com.utsav.dockerspringboot.exception;
 
 public class DuplicateUsernameException extends RuntimeException {
     public DuplicateUsernameException(String message) {
