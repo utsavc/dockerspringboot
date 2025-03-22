@@ -1,5 +1,6 @@
 package com.utsav.dockerspringboot.controller.admin.coupon;
 
+import com.utsav.dockerspringboot.dto.CouponDto;
 import com.utsav.dockerspringboot.model.Coupon;
 import com.utsav.dockerspringboot.service.coupon.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/coupons")
+@RequestMapping("/admin/coupon")
 public class CouponController {
 
     @Autowired
     private CouponService couponService;
 
-    @PostMapping
-    public ResponseEntity<Coupon> createCoupon(@RequestBody Coupon coupon) {
-        Coupon createdCoupon = couponService.createCoupon(coupon);
+    @PostMapping("create")
+    public ResponseEntity<Coupon> createCoupon(@RequestBody CouponDto couponDto) {
+        Coupon createdCoupon = couponService.createCoupon(couponDto);
         return ResponseEntity.ok(createdCoupon);
     }
+
+
 
     @GetMapping("/{couponId}")
     public ResponseEntity<Coupon> getCouponById(@PathVariable Long couponId) {

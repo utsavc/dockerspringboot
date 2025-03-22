@@ -26,5 +26,5 @@ public class OrderDto {
 
     private String paymentMethod;
 
-    private List<OrderItemDto> orderItems; // Optional: Include simplified order items
+    private List<OrderItemDto> orderItems;
 }

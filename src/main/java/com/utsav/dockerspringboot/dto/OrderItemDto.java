@@ -11,12 +11,11 @@ public class OrderItemDto {
 
     private Long orderItemId;
 
-    private Long productId; // Include only the ID of the associated product
+    private Long productId;
 
     private Integer quantity;
 
     private Double priceAtPurchase;
 
-    // Optional: Include orderId if needed
-    private Long orderId; // Include only the ID of the associated order
+    private Long orderId;
 }

@@ -1,4 +1,5 @@
 package com.utsav.dockerspringboot.service.coupon;
+import com.utsav.dockerspringboot.dto.CouponDto;
 import com.utsav.dockerspringboot.exception.CouponNotFoundException;
 import com.utsav.dockerspringboot.model.Coupon;
 import com.utsav.dockerspringboot.repository.CouponRepository;
@@ -17,8 +18,18 @@ public class CouponServiceImpl implements CouponService {
     private CouponRepository couponRepository;
 
     @Override
-    public Coupon createCoupon(Coupon coupon) {
+    public Coupon createCoupon(CouponDto couponDto) {
+        Coupon coupon = new Coupon();
+        coupon.setCode(couponDto.getCode());
+        coupon.setDiscountType(couponDto.getDiscountType());
+        coupon.setDiscountValue(couponDto.getDiscountValue());
+        coupon.setMaxUses(couponDto.getMaxUses());
+        coupon.setValidFrom(couponDto.getValidFrom());
+        coupon.setValidTo(couponDto.getValidTo());
+        coupon.setUsedCount(couponDto.getUsedCount());
         return couponRepository.save(coupon);
+
+
     }
 
     @Override

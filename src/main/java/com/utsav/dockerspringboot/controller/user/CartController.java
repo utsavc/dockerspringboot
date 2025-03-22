@@ -5,6 +5,7 @@ import com.utsav.dockerspringboot.model.Cart;
 import com.utsav.dockerspringboot.model.Order;
 import com.utsav.dockerspringboot.model.OrderItem;
 import com.utsav.dockerspringboot.repository.CartRepository;
+import com.utsav.dockerspringboot.repository.OrderItemRepository;
 import com.utsav.dockerspringboot.service.cart.CartService;
 import com.utsav.dockerspringboot.service.cart.CheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user/cart")
@@ -26,6 +28,8 @@ public class CartController {
 
     @Autowired
     private CheckoutService checkoutService;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @PostMapping("/add-to-cart")
     public ResponseEntity<CartDto> addToCart(@RequestBody CartDto cartDto) {
@@ -60,6 +64,8 @@ public class CartController {
     public ResponseEntity<OrderDto> checkout(@RequestBody CheckoutRequest checkoutRequest) {
         Order order = checkoutService.checkout(checkoutRequest);
 
+        List<OrderItem> orderItems = orderItemRepository.findByOrder(order);
+
 
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderId(order.getOrderId());
@@ -70,29 +76,26 @@ public class CartController {
         orderDto.setTotalAmount(order.getTotalAmount());
         orderDto.setShippingAddress(order.getShippingAddress());
 
-        // Map the list of OrderItems to OrderItemDto
-        if (order.getOrderItems() != null) {
-            orderDto.setOrderItems(
-                    order.getOrderItems().stream()
-                            .map(this::mapOrderItemToDto) // Helper method to map OrderItem to OrderItemDto
-                            .toList()
-            );
-        }
 
+
+        List<OrderItemDto> orderItemDtos = orderItems.stream()
+                .map(orderItem -> {
+                    OrderItemDto orderItemDto = new OrderItemDto();
+                    orderItemDto.setOrderItemId(orderItem.getOrderItemId());
+                    orderItemDto.setProductId(orderItem.getProduct().getProductId());
+                    orderItemDto.setQuantity(orderItem.getQuantity());
+                    orderItemDto.setPriceAtPurchase(orderItem.getPriceAtPurchase());
+                    orderItemDto.setOrderId(orderItem.getOrder().getOrderId());
+                    return orderItemDto;
+                })
+                .collect(Collectors.toList());
+
+
+        orderDto.setOrderItems(orderItemDtos);
 
         return ResponseEntity.ok(orderDto);
     }
 
-
-
-    private OrderItemDto mapOrderItemToDto(OrderItem orderItem) {
-        OrderItemDto orderItemDto = new OrderItemDto();
-        orderItemDto.setOrderItemId(orderItem.getOrderItemId());
-        orderItemDto.setProductId(orderItem.getProduct().getProductId()); // Extract only the productId
-        orderItemDto.setQuantity(orderItem.getQuantity());
-        orderItemDto.setPriceAtPurchase(orderItem.getPriceAtPurchase());
-        return orderItemDto;
-    }
 
 
 }

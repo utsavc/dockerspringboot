@@ -1,5 +1,6 @@
 package com.utsav.dockerspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.utsav.dockerspringboot.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,7 @@ public class User {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+
     // Automatically set the creation timestamp for createdAt
     @PrePersist
     protected void onCreate() {
@@ -59,11 +61,21 @@ public class User {
 
     // Relationships
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private RewardPoints rewardPoints;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
+
+    public void initializeRewardPoints() {
+        RewardPoints rewardPoints = new RewardPoints();
+        rewardPoints.setUser(this); // Link the RewardPoints to the User
+        rewardPoints.setPointsEarned(0); // Start with 0 points earned
+        rewardPoints.setPointsRedeemed(0); // Start with 0 points redeemed
+        rewardPoints.setLastUpdated(LocalDateTime.now()); // Set the last updated timestamp
+        this.rewardPoints = rewardPoints; // Assign the RewardPoints to the User
+    }
 
 
 

@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class UserCoupon {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_coupon_id")
@@ -30,7 +29,10 @@ public class UserCoupon {
     @JoinColumn(name = "coupon_id", referencedColumnName = "coupon_id", nullable = false)
     private Coupon coupon;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = true)
+    private Order order; // Link to the Order where the coupon was used
+
     @Column(name = "used_at", nullable = false)
     private LocalDateTime usedAt;
-
 }

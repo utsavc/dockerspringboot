@@ -1,7 +1,9 @@
 package com.utsav.dockerspringboot.controller.auth;
 
 import com.utsav.dockerspringboot.dto.LoginRequest;
+import com.utsav.dockerspringboot.model.RewardPoints;
 import com.utsav.dockerspringboot.model.User;
+import com.utsav.dockerspringboot.repository.RewardPointsRepository;
 import com.utsav.dockerspringboot.service.CustomUserDetailService;
 import com.utsav.dockerspringboot.service.jwtservice.JwtService;
 import com.utsav.dockerspringboot.service.user.UserService;
@@ -16,6 +18,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/public")
@@ -38,9 +42,13 @@ public class UserController {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private RewardPointsRepository rewardPointsRepository;
+
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
-        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
+        User savedUser = userService.save(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
 

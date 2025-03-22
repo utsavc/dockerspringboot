@@ -1,10 +1,11 @@
 package com.utsav.dockerspringboot.service.coupon;
+import com.utsav.dockerspringboot.dto.CouponDto;
 import com.utsav.dockerspringboot.model.Coupon;
 
 import java.util.List;
 
 public interface CouponService {
-    Coupon createCoupon(Coupon coupon);
+    Coupon createCoupon(CouponDto couponDto);
     Coupon getCouponById(Long couponId);
     Coupon getCouponByCode(String code);
     List<Coupon> getActiveCoupons();

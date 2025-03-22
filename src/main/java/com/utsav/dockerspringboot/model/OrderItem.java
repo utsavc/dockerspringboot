@@ -36,5 +36,9 @@ public class OrderItem {
     @Column(name = "price_at_purchase", nullable = false)
     private Double priceAtPurchase;
 
+
+    @Column(name = "is_returned", nullable = false)
+    private Boolean isReturned = false; // Default value is false (not returned)
+
     // Getters and Setters
 }

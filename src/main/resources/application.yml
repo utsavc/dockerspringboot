@@ -5,7 +5,7 @@ spring:
   security:
     enabled: false
   datasource:
-    url: jdbc:mysql://localhost:3308/dockerspringboot
+    url: jdbc:mysql://db:3306/dockerspringboot
     username: utsav
     password: utsav
 #    driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,9 +15,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 
 springdoc:

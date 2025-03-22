@@ -1,10 +1,13 @@
 package com.utsav.dockerspringboot.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reward_points")
+@Data
 public class RewardPoints {
 
     @Id
@@ -25,5 +28,4 @@ public class RewardPoints {
     @Column(name = "last_updated", nullable = false)
     private LocalDateTime lastUpdated;
 
-    // Getters and Setters
 }

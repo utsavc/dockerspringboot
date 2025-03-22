@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
@@ -29,8 +28,14 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private LocalDateTime orderDate;
 
+    @Column(name = "original_total_amount", nullable = false)
+    private Double originalTotalAmount; // Original total before discounts
+
+    @Column(name = "discount_amount", nullable = false)
+    private Double discountAmount; // Discount applied due to coupon
+
     @Column(name = "total_amount", nullable = false)
-    private Double totalAmount;
+    private Double totalAmount; // Final total after discounts and reward points redemption
 
     @Column(name = "status", nullable = false)
     private String status;
@@ -41,9 +46,6 @@ public class Order {
     @Column(name = "payment_method", nullable = false)
     private String paymentMethod;
 
-    // Relationships
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
-
-    // Getters and Setters
 }

@@ -46,5 +46,4 @@ public class Coupon {
     @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserCoupon> userCoupons;
 
-    // Getters and Setters
 }
